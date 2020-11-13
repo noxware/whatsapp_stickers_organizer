@@ -1,3 +1,3 @@
 # Whatsapp Stickers Organizer
 
-Work in progress.
+A gift for a friend. Work in progress.
