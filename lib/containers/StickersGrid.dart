@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
+import 'dart:io';
+
 import '../components/Sticker.dart';
 
-import 'package:flutter_whatsapp_stickers/flutter_whatsapp_stickers.dart';
-import '../apis/stickers.dart';
-
 class StickersGrid extends StatelessWidget {
+  final String baseFolder;
+  final List<String> fileNames;
+  final Function(bool, String, String) onSelectedChange;
+
+  StickersGrid({
+    @required this.baseFolder,
+    @required this.fileNames,
+    this.onSelectedChange,
+  });
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getStickersFiles(),
-      builder: (context, AsyncSnapshot<List<String>> snapshot) {
-        if (snapshot.hasData) {
-          return Text(snapshot.data.toString());
-        } else if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
-        } else {
-          return CircularProgressIndicator();
-        }
-      },
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+        maxCrossAxisExtent: 100,
+        childAspectRatio: 1,
+      ),
+      itemCount: fileNames.length,
+      itemBuilder: (context, index) => Sticker(
+        baseFolder: baseFolder,
+        fileName: fileNames[index],
+        onSelectedChange: onSelectedChange,
+      ),
     );
-    /*Text((await WhatsAppStickers.isWhatsAppInstalled).toString());*/
   }
 }

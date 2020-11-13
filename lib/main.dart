@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'screens/CachedScreen.dart';
 import 'screens/IgnoredScreen.dart';
 
+import 'apis/appData.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -11,6 +13,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Future<AppData> appData = loadAppData();
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/cached',
       routes: <String, WidgetBuilder>{
-        '/cached': (context) => CachedScreen(),
+        '/cached': (context) => CachedScreen(appData: appData),
         '/ignored': (context) => IgnoredScreen(),
       },
     );

@@ -4,7 +4,13 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import '../containers/MainDrawer.dart';
 import '../containers/StickersGrid.dart';
 
+import '../apis/appData.dart';
+
 class CachedScreen extends StatefulWidget {
+  final Future<AppData> appData;
+
+  CachedScreen({@required this.appData});
+
   @override
   _CachedScreenState createState() => _CachedScreenState();
 }
@@ -27,7 +33,21 @@ class _CachedScreenState extends State<CachedScreen> {
         ],
       ),
       drawer: MainDrawer(),
-      body: StickersGrid(),
+      body: FutureBuilder(
+        future: widget.appData,
+        builder: (context, AsyncSnapshot<AppData> snapshot) {
+          if (snapshot.hasData) {
+            return StickersGrid(
+              baseFolder: snapshot.data.stickersFolder,
+              fileNames: snapshot.data.fileNames,
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
 }
