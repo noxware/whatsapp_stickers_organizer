@@ -13,10 +13,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Future<AppData> appData = loadAppData();
+    var appData = new AppData();
 
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Whatsapp Stickers Organizer',
       theme: ThemeData(
         // This is the theme of your application.
         //

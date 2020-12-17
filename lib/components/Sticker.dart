@@ -2,50 +2,40 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:path/path.dart' as path;
 
-class Sticker extends StatefulWidget {
-  final String baseFolder;
-  final String fileName;
-  final Function(bool, String, String) onSelectedChange;
+class Sticker extends StatelessWidget {
+  final String filePath;
+  final bool selected;
+  final void Function(bool selected, String filePath) onSelectedShoudChange;
 
   Sticker({
-    @required this.baseFolder,
-    @required this.fileName,
-    this.onSelectedChange,
-  });
-
-  @override
-  _StickerState createState() => _StickerState();
-}
-
-class _StickerState extends State<Sticker> {
-  bool selected = false;
+    Key key,
+    @required this.filePath,
+    this.selected = false,
+    this.onSelectedShoudChange,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          selected = !selected;
-        });
-
-        if (widget.onSelectedChange != null)
-          widget.onSelectedChange(selected, widget.fileName, widget.baseFolder);
+        if (onSelectedShoudChange != null)
+          onSelectedShoudChange(selected, filePath);
       },
       child: Stack(
         children: [
-          Image.file(File(path.join(widget.baseFolder, widget.fileName))),
+          Image.file(File(filePath)),
           if (selected)
             Positioned(
-              top: 15,
-              right: 15,
+              top: 8,
+              right: 8,
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(6),
                 ),
                 constraints: BoxConstraints(
-                  minWidth: 14,
-                  minHeight: 14,
+                  minWidth: 16,
+                  minHeight: 16,
                 ),
                 child: Text(
                   '1',

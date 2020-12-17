@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as path;
-import 'dart:io';
 
 import '../components/Sticker.dart';
 
 class StickersGrid extends StatelessWidget {
-  final String baseFolder;
-  final List<String> fileNames;
-  final Function(bool, String, String) onSelectedChange;
+  final List<String> stickersPath;
+  final Set<String> selectedStickers;
+  final void Function(bool currentSelectionValue, String stickerPath)
+      onStickerSelectionShoudChange;
 
   StickersGrid({
-    @required this.baseFolder,
-    @required this.fileNames,
-    this.onSelectedChange,
+    @required this.stickersPath,
+    this.selectedStickers,
+    this.onStickerSelectionShoudChange,
   });
 
   @override
@@ -22,11 +21,12 @@ class StickersGrid extends StatelessWidget {
         maxCrossAxisExtent: 100,
         childAspectRatio: 1,
       ),
-      itemCount: fileNames.length,
+      itemCount: stickersPath.length,
       itemBuilder: (context, index) => Sticker(
-        baseFolder: baseFolder,
-        fileName: fileNames[index],
-        onSelectedChange: onSelectedChange,
+        key: ValueKey(stickersPath[index]),
+        filePath: stickersPath[index],
+        selected: selectedStickers.contains(stickersPath[index]),
+        onSelectedShoudChange: onStickerSelectionShoudChange,
       ),
     );
   }

@@ -1,16 +1,15 @@
+import 'dart:io';
+
 import 'stickers.dart';
+import '../core/whatsapp.dart';
 
 class AppData {
-  String stickersFolder;
-  List<String> fileNames;
-  Set<String> ignored;
-}
+  Future<Directory> stickersDirectory;
+  Future<List<File>> stickerFiles;
+  Whatsapp whatsapp = Whatsapp();
 
-Future<AppData> loadAppData() async {
-  final instance = AppData();
-
-  instance.stickersFolder = await getStickersPath();
-  instance.fileNames = await getStickersFiles();
-
-  return instance;
+  AppData() {
+    stickersDirectory = getCachedStickersDirectory();
+    stickerFiles = getCachedStickerFiles();
+  }
 }
