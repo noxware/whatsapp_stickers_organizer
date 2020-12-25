@@ -16,6 +16,8 @@ class StickersGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int selectedCounter = 1;
+
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 100,
@@ -25,7 +27,9 @@ class StickersGrid extends StatelessWidget {
       itemBuilder: (context, index) => Sticker(
         key: ValueKey(stickersPath[index]),
         filePath: stickersPath[index],
-        selected: selectedStickers.contains(stickersPath[index]),
+        selectedIndex: selectedStickers.contains(stickersPath[index])
+            ? selectedCounter++
+            : null,
         onSelectedShoudChange: onStickerSelectionShoudChange,
       ),
     );

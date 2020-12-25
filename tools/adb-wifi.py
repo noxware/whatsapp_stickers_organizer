@@ -34,7 +34,7 @@ def main():
     step('Before continue, remember to connect your phone through USB this time.')
 
     try:
-        run_command("adb kill-server", True)
+        #run_command("adb kill-server", True)
         run_command('adb wait-for-device && adb tcpip 5555', True)
         ip = run_command("adb wait-for-device && adb shell \"ifconfig | grep -Eo 'inet (addr:)?([0-9]*\\.){3}[0-9]*' | grep -Eo '([0-9]*\\.){3}[0-9]*' | grep -v '127.0.0.1'\"", True)
 

@@ -6,7 +6,7 @@ Future<String> askText({
   @required BuildContext context,
   String title = '',
   String labelText = '',
-  String cancelText = 'Cancel',
+  String cancelText = 'Cancelar',
   String okText = 'Ok',
 }) {
   var completer = Completer<String>();

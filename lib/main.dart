@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_stickers_organizer/screens/GiftScreen.dart';
+import 'package:whatsapp_stickers_organizer/screens/HelpScreen.dart';
 
+import 'containers/ContainerWithPermissions.dart';
 import 'screens/CachedScreen.dart';
 import 'screens/IgnoredScreen.dart';
-
-import 'apis/appData.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,30 +14,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    var appData = new AppData();
-
     return MaterialApp(
       title: 'Whatsapp Stickers Organizer',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
+        primaryColor: Colors.pink[300],
+        accentColor: Colors.pink[500],
+        primarySwatch: Colors.pink,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/cached',
       routes: <String, WidgetBuilder>{
-        '/cached': (context) => CachedScreen(appData: appData),
+        '/cached': (context) => ContainerWithPermissions(
+            Permission.extStorage, (context) => CachedScreen()),
         '/ignored': (context) => IgnoredScreen(),
+        '/help': (context) => HelpScreen(),
+        '/gift': (context) => GiftScreen(),
       },
     );
   }
